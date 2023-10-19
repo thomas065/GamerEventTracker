@@ -178,7 +178,7 @@ function displayStats(events) {
 
     // calculate min attendance
     let min = minAttendance(events);
-    document.getElementById('min-attendance').innerText = Math.round(min).toLocaleString();
+    document.getElementById('min-attendance').innerText = min.toLocaleString();
 }
 
 function avgAttendance(events) {
@@ -196,7 +196,8 @@ function avgAttendance(events) {
     return average;
 }
 
-function maxAttendance() {
+function maxAttendance(events) {
+    // calculate max attendance and return it
     let sum = 0;
 
     for (let i = 0; i < events.length; i++) {
@@ -210,16 +211,15 @@ function maxAttendance() {
     return max;
 }
 
-// function minAttendance() {
-//     let sum = 0;
+function minAttendance(events) {
+    let min = events[0].attendance; // first event.attendance in index 0 place
 
-//     for (let i = 0; i < events.length; i++) {
-//         let event = events[i];
+    for (let i = 1; i < events.length; i++) {
+        let event = events[i];
 
-//         sum += event.attendance;
-//     }
-
-//     let min = sum + events.length
-
-//     return min;
-// }
+        if (event < min) {
+            min = event // grabs minimum number if there is a lower value
+        }
+    }
+    return min
+}
