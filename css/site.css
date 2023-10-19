@@ -1,0 +1,50 @@
+/* #region sticky footer css */
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1;
+}
+
+footer {
+    flex-shrink: 0;
+}
+/* #endregion */
+
+footer, nav.navbar {
+    background-color: var(--tb-cyan-900);
+    color: var(--tb-gray-100);
+}
+
+.nav-link:hover {
+    color: var(--tb-gray-100) !important;
+}
+
+footer .bi {
+    color: var(--tb-gray-100);
+    font-size: 2rem;
+    padding-left: .5rem;
+    transition: color 0.15s ease-in;
+}
+
+footer .bi:hover {
+    color: var(--tb-green-500);
+}
+
+.devicons {
+    font-size: 3rem;
+}
+
+.bi-check-square-fill {
+    color: var(--tb-orange-core);
+}
+
+.app-logo {
+    max-width: 400px;
+}
