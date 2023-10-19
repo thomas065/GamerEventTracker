@@ -64,7 +64,6 @@ const events = [
     },
 ];
 
-
 //  entry point of application, needs to run when page loads
 function buildDropDown() {
     // step 1, get all events that we know about
@@ -92,11 +91,135 @@ function buildDropDown() {
         //  - add that element to the drop down menu
         dropDownMenu.appendChild(dropDownItem);
     }
+
+    // displayEvents(currentEvents)
+    displayStats(currentEvents)
+    avgAttendance(currentEvents)
+
+    // to be continued........
 }
 
 function getEvents() {
     //TODO: get events from local storage
 
-
     return events;
 }
+
+function displayEvents(events) {
+
+    // get the table to put the events in
+    const eventsTable = document.getElementById('events-table');
+
+    // clear the table
+    eventsTable.innerHTML = '';
+
+    // loop through events
+    for (let i = 0; i < events.length; i++) {
+        let event = events[i];
+
+        // - fill the table with rows:
+        //      - make a <tr></tr>
+        let eventRow = document.createElement('tr');
+
+        //      - make a <td> for each property
+        //      - put the data into each <td>
+        let eventName = document.createElement('td');
+        eventName.innerText = event.event;
+        eventRow.appendChild(eventName);
+
+        let eventCity = document.createElement('td');
+        eventCity.innerText = event.city;
+        eventRow.appendChild(eventCity);
+
+        let eventState = document.createElement('td');
+        eventState.innerText = event.state;
+        eventRow.appendChild(eventState);
+
+        let eventAttendance = document.createElement('td');
+        eventAttendance.innerText = event.attendance;
+        eventRow.appendChild(eventAttendance);
+
+        let eventDate = document.createElement('td');
+        eventDate.innerText = event.date;
+        eventRow.appendChild(eventDate);
+
+
+        //      - append the row to the <tbody>
+        eventsTable.appendChild(eventRow);
+    }
+}
+
+// given an array of events, total the sum of events and return the value
+function sumAttendance(events) {
+    let sum = 0;
+
+    for (let i = 0; i < events.length; i++) {
+        let event = events[i];
+
+        sum += event.attendance;
+    }
+
+    return sum;
+}
+
+function displayStats(events) {
+    // calculate total attendance
+    let total = sumAttendance(events);
+    document.getElementById('total-attendance').innerHTML = total.toLocaleString();
+
+
+    // calculate average attendance
+    let average = avgAttendance(events);
+    document.getElementById('avg-attendance').innerText = Math.round(average).toLocaleString();
+
+    // calculate max attendance
+    let max = maxAttendance(events);
+    document.getElementById('max-attendance').innerText = Math.round(max).toLocaleString();
+
+    // calculate min attendance
+    let min = minAttendance(events);
+    document.getElementById('min-attendance').innerText = Math.round(min).toLocaleString();
+}
+
+function avgAttendance(events) {
+    // calculate average attendance and return it
+    let sum = 0;
+
+    for (let i = 0; i < events.length; i++) {
+        let event = events[i];
+
+        sum += event.attendance;
+    }
+
+    let average = sum / events.length
+
+    return average;
+}
+
+function maxAttendance() {
+    let sum = 0;
+
+    for (let i = 0; i < events.length; i++) {
+        let event = events[i];
+
+        sum += event.attendance;
+    }
+
+    let max = sum + events.length
+
+    return max;
+}
+
+// function minAttendance() {
+//     let sum = 0;
+
+//     for (let i = 0; i < events.length; i++) {
+//         let event = events[i];
+
+//         sum += event.attendance;
+//     }
+
+//     let min = sum + events.length
+
+//     return min;
+// }
