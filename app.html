@@ -33,7 +33,7 @@
         <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
     </head>
 
-    <body>
+    <body onload="buildDropDown()">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/index.html">
@@ -94,19 +94,92 @@
             </div>
         </nav>
 
-        <main class="container">
-            <h1>APP UI GOES HERE</h1>
-            <input
-                class="form-control my-3"
-                placeholder="Enter a message"
-                type="text"
-                style="width: 12rem"
-                name="message"
-                id="message"
-            />
-            <button type="button" id="btnSubmit" class="btn btn-primary">
-                Display Message
-            </button>
+        <main class="container py-3">
+            <div class="row row-cols-1 row-cols-md-2">
+                <div class="col order-md-last">
+                    <img
+                        class="img-fluid p-3"
+                        src="/img/APPNAMELogo.svg"
+                        alt=""
+                    />
+                </div>
+                <div class="col">
+                    <!-- stats -->
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="dropdown">
+                                <a
+                                    class="btn btn-primary dropdown-toggle"
+                                    href="#"
+                                    id="dropdown-btn"
+                                    role="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                >
+                                    Pick a Location
+                                </a>
+                                <ul id="city-dropdown" class="dropdown-menu">
+                                <!-- drop down template -->
+                                </ul>
+                            </div>
+                            <table class="table table-striped mt-2 border">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th colspan="2">
+                                            Stats for <span id="stats-loc">All</span> Events
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Total Attendace</td>
+                                        <td id="total-attend">1,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Average Attendace</td>
+                                        <td id="avg-attend">1,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Most Attended</td>
+                                        <td id="max-attend">1,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Least Attended</td>
+                                        <td id="min-attend">1,000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3 card">
+                <div class="card-body">
+                    <button id="new-event-btn" class="btn btn-primary btn-responsive">Add Event</button>
+                    <div class="table-responsive">
+                        <table class="table table-striped border mt-2">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Event Name</th>
+                                    <th>City</th>
+                                    <th>State</th>
+                                    <th>Attendance</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="events-table">
+                                <tr>
+                                    <td>ComicCon</td>
+                                    <td>New York</td>
+                                    <td>New York</td>
+                                    <td>240,000</td>
+                                    <td>6/1/2021</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <footer class="py-3 container-fluid">
@@ -156,5 +229,12 @@
             // tell the button to ru our displayMessage function when clicked
             button.addEventListener('click', displayMessage);
         </script>
+
+        <!-- template drop down -->
+        <template id="dropdown-item-template">
+            <li>
+                <a class="dropdown-item" href="#"></a>
+            </li>
+        </template>
     </body>
 </html>
