@@ -1,66 +1,66 @@
 const events = [
     {
-        event: "ComicCon",
-        city: "New York",
-        state: "New York",
+        event: 'ComicCon',
+        city: 'New York',
+        state: 'New York',
         attendance: 240000,
-        date: "06/01/2017",
+        date: '06/01/2017',
     },
     {
-        event: "ComicCon",
-        city: "New York",
-        state: "New York",
+        event: 'ComicCon',
+        city: 'New York',
+        state: 'New York',
         attendance: 250000,
-        date: "06/01/2018",
+        date: '06/01/2018',
     },
     {
-        event: "ComicCon",
-        city: "New York",
-        state: "New York",
+        event: 'ComicCon',
+        city: 'New York',
+        state: 'New York',
         attendance: 257000,
-        date: "06/01/2019",
+        date: '06/01/2019',
     },
     {
-        event: "ComicCon",
-        city: "San Diego",
-        state: "California",
+        event: 'ComicCon',
+        city: 'San Diego',
+        state: 'California',
         attendance: 130000,
-        date: "06/01/2017",
+        date: '06/01/2017',
     },
     {
-        event: "ComicCon",
-        city: "San Diego",
-        state: "California",
+        event: 'ComicCon',
+        city: 'San Diego',
+        state: 'California',
         attendance: 140000,
-        date: "06/01/2018",
+        date: '06/01/2018',
     },
     {
-        event: "ComicCon",
-        city: "San Diego",
-        state: "California",
+        event: 'ComicCon',
+        city: 'San Diego',
+        state: 'California',
         attendance: 150000,
-        date: "06/01/2019",
+        date: '06/01/2019',
     },
     {
-        event: "HeroesCon",
-        city: "Charlotte",
-        state: "North Carolina",
+        event: 'HeroesCon',
+        city: 'Charlotte',
+        state: 'North Carolina',
         attendance: 40000,
-        date: "06/01/2017",
+        date: '06/01/2017',
     },
     {
-        event: "HeroesCon",
-        city: "Charlotte",
-        state: "North Carolina",
+        event: 'HeroesCon',
+        city: 'Charlotte',
+        state: 'North Carolina',
         attendance: 45000,
-        date: "06/01/2018",
+        date: '06/01/2018',
     },
     {
-        event: "HeroesCon",
-        city: "Charlotte",
-        state: "North Carolina",
+        event: 'HeroesCon',
+        city: 'Charlotte',
+        state: 'North Carolina',
         attendance: 50000,
-        date: "06/01/2019",
+        date: '06/01/2019',
     },
 ];
 
@@ -93,8 +93,8 @@ function buildDropDown() {
     }
 
     // displayEvents(currentEvents)
-    displayStats(currentEvents)
-    avgAttendance(currentEvents)
+    displayStats(currentEvents);
+    avgAttendance(currentEvents);
 
     // to be continued........
 }
@@ -106,7 +106,6 @@ function getEvents() {
 }
 
 function displayEvents(events) {
-
     // get the table to put the events in
     const eventsTable = document.getElementById('events-table');
 
@@ -143,7 +142,6 @@ function displayEvents(events) {
         eventDate.innerText = event.date;
         eventRow.appendChild(eventDate);
 
-
         //      - append the row to the <tbody>
         eventsTable.appendChild(eventRow);
     }
@@ -165,16 +163,17 @@ function sumAttendance(events) {
 function displayStats(events) {
     // calculate total attendance
     let total = sumAttendance(events);
-    document.getElementById('total-attendance').innerHTML = total.toLocaleString();
-
+    document.getElementById('total-attendance').innerHTML =
+        total.toLocaleString();
 
     // calculate average attendance
     let average = avgAttendance(events);
-    document.getElementById('avg-attendance').innerText = Math.round(average).toLocaleString();
+    document.getElementById('avg-attendance').innerText =
+        Math.round(average).toLocaleString();
 
     // calculate max attendance
     let max = maxAttendance(events);
-    document.getElementById('max-attendance').innerText = Math.round(max).toLocaleString();
+    document.getElementById('max-attendance').innerText = max.toLocaleString();
 
     // calculate min attendance
     let min = minAttendance(events);
@@ -191,35 +190,23 @@ function avgAttendance(events) {
         sum += event.attendance;
     }
 
-    let average = sum / events.length
+    let average = sum / events.length;
 
     return average;
 }
 
-function maxAttendance(events) {
-    // calculate max attendance and return it
-    let sum = 0;
+function minAttendance(events) {
+    // calculate min attendance and return it
+    let attendees = events.map(event => event.attendance); // gets all attendance values because that is what Jacob said in class, .map gets all items and changes it to an array (paraphrasing of course!).
+    let min = Math.min(...attendees); // Find the minimum attendance number
+    // Math.min() method returns the smallest of the numbers given as input parameters
 
-    for (let i = 0; i < events.length; i++) {
-        let event = events[i];
-
-        sum += event.attendance;
-    }
-
-    let max = sum + events.length
-
-    return max;
+    return min;
 }
 
-function minAttendance(events) {
-    let min = events[0].attendance; // first event.attendance in index 0 place
-
-    for (let i = 1; i < events.length; i++) {
-        let event = events[i];
-
-        if (event < min) {
-            min = event // grabs minimum number if there is a lower value
-        }
-    }
-    return min
+function maxAttendance(events) {
+    // calculate max attendance and return it
+    let attendees = events.map(event => event.attendance);
+    let max = Math.max(...attendees);
+    return max;
 }
