@@ -108,7 +108,7 @@
             <h1 class="border-bottom border-2 border-dark">The Code</h1>
             <div class="row">
                 <div class="col-12 col-lg-8">
-                    <pre class="line-numbers synapse">
+                    <pre class="line-numbers synapse ">
                         <code class="language-js">
                             const events = [ // An array of events just to get started.
                             {
@@ -435,7 +435,7 @@
                         </code>
                 </pre>
                 </div>
-                <div class="col-12 col-lg-4">
+                <div class="col-12 col-lg-4 synapse overflow-y-scroll">
                     <!-- Explain your code here -->
                     <p>
                         Okay, first I hard coded an array of information representing objects with properties such as <code>event, city, state</code>.
@@ -445,7 +445,12 @@
                         The first function, <code>buildDropDown()</code> serves as the entry point of the application which runs when the page is loaded.
                         Inside, there are several actions that occur, it calls the <code>getEvents()</code> function to retrieve the current events.
                     </p>
-                    <p>If there is no data stored on the local machine, it uses the data from the <code>events</code> array to provide the necessary code.  </p>
+                    <p>If there is no data stored on the local machine, it uses the data from the <code>events</code> array to provide the necessary code.  Then we call two additional functions <code>displayEvents()</code> and <code>displayStats()</code> in order to display the events in the table and show the statistics.</p>
+                    <p>The <code>saveEvents()</code> function is used to save the data to local storage and convert the data to a readable format that your machine can read by <code>JSON</code> stringify and store the info.  The <code>displayEvents()</code> function populates the <code>HTML</code> table with event data, creating rows and columns for each event.</p>
+                    <p>There are a few math procedures happening as well like <code>sumAttendance(), avgAttendance(), minAttendance</code>, etc.  As you can see by their respective naming convention, they do just what they say such as add, divide and difference calculations.</p>
+                    <p>Next the <code>calculateStats()</code> groups all the information in one function.  Once the user has entered their information, the <code>saveNewEvent()</code> function is called, this relates to the form adding new information and then save and then reset the form to clear its data, ready for new information to be entered.</p>
+                    <p>This APP is about managing and displaying information about events.  It can be used otherwise with just simple everyday tasks such as doctor appointments or school visits.</p>
+                    <p>Thanks for reading!</p>
                 </div>
             </div>
         </main>
