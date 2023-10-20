@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PAX Task Event Tracker: By Thomas Bell</title>
+        <title>Gamer Event Tracker: By Thomas Bell</title>
 
         <!-- Bootstrap CSS -->
         <link
@@ -38,7 +38,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="/index.html">
                     <img src="/img/neonLion.svg" height="45" alt="myLogo" />
-                    PAX Task Event Tracker
+                    Gamer Event Tracker
                 </a>
                 <button
                     class="navbar-toggler"
@@ -96,10 +96,10 @@
 
         <main class="container py-3">
             <div class="row row-cols-1 row-cols-md-2">
-                <div class="col order-md-last">
+                <div class="col order-md-last text-center">
                     <img
-                        class="img-fluid p-3"
-                        src="/img/APPNAMELogo.svg"
+                        class="img-fluid p-3 rounded-5 shadow bg-success-subtle"
+                        src="/img/levelup.svg"
                         alt=""
                     />
                 </div>
@@ -119,14 +119,16 @@
                                     Pick a Location
                                 </a>
                                 <ul id="city-dropdown" class="dropdown-menu">
-                                <!-- drop down template -->
+                                    <!-- drop down template -->
                                 </ul>
                             </div>
                             <table class="table table-striped mt-2 border">
                                 <thead class="table-dark">
                                     <tr>
                                         <th colspan="2">
-                                            Stats for <span id="stats-loc">All</span> Events
+                                            Stats for
+                                            <span id="stats-loc">All</span>
+                                            Events
                                         </th>
                                     </tr>
                                 </thead>
@@ -155,7 +157,12 @@
             </div>
             <div class="mt-3 card">
                 <div class="card-body">
-                    <button id="new-event-btn" class="btn btn-primary btn-responsive">Add Event</button>
+                    <button
+                        id="new-event-btn"
+                        class="btn btn-primary btn-responsive"
+                    >
+                        Add Event
+                    </button>
                     <div class="table-responsive">
                         <table class="table table-striped border mt-2">
                             <thead class="table-dark">
