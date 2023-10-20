@@ -77,6 +77,7 @@ function buildDropDown() {
 
     const dropDownTemplate = document.getElementById('dropdown-item-template'); // moving this here because we want to use this globally multiple times
     const dropDownMenu = document.getElementById('city-dropdown');
+    dropDownMenu.innerHTML = '';
 
     // for each of those city names:
     for (let i = 0; i < dropDownChoices.length; i++) {
@@ -92,17 +93,33 @@ function buildDropDown() {
         dropDownMenu.appendChild(dropDownItem);
     }
 
-    // displayEvents(currentEvents)
+    displayEvents(currentEvents)
     displayStats(currentEvents);
-    avgAttendance(currentEvents);
-
-    // to be continued........
+    document.getElementById('stats-loc').textContent = 'All';
 }
 
 function getEvents() {
-    //TODO: get events from local storage
+    // TODO: get events from local storage
+    // If noone has visited your website, we need to fill your local storage with some data so the next time you visit, there will already be something there
+    let eventsJson = localStorage.getItem('tjb-events');
 
-    return events;
+    let storedEvents = events;
+
+    if(eventsJson == null) {
+        saveEvents(events);
+    } else {
+        storedEvents = JSON.parse(eventsJson);
+    }
+
+    return storedEvents;
+}
+
+function saveEvents(events) {
+    // get events from local storage
+
+    let eventsJson = JSON.stringify(events); // taking an array of objects and turning it into a string
+
+    localStorage.setItem('tjb-events', eventsJson); // using my own initials to be different from any other variable-id. **Not Secure Storage**
 }
 
 function displayEvents(events) {
@@ -135,11 +152,12 @@ function displayEvents(events) {
         eventRow.appendChild(eventState);
 
         let eventAttendance = document.createElement('td');
-        eventAttendance.innerText = event.attendance;
+        eventAttendance.innerText = event.attendance.toLocaleString();
         eventRow.appendChild(eventAttendance);
 
         let eventDate = document.createElement('td');
-        eventDate.innerText = event.date;
+        let date = new Date(event.date);  // format the date to World date
+        eventDate.innerText = date.toLocaleDateString(undefined, {dateStyle: 'full'}); // use new World date
         eventRow.appendChild(eventDate);
 
         //      - append the row to the <tbody>
@@ -147,7 +165,7 @@ function displayEvents(events) {
     }
 }
 
-// given an array of events, total the sum of events and return the value
+// given an array of events, total the sum of events and return the value <<<--- COMMON INTERVIEW QUESTION *******
 function sumAttendance(events) {
     let sum = 0;
 
@@ -162,22 +180,23 @@ function sumAttendance(events) {
 
 function displayStats(events) {
     // calculate total attendance
-    let total = sumAttendance(events);
-    document.getElementById('total-attendance').innerHTML =
-        total.toLocaleString();
+    // let total = sumAttendance(events); // not being used because of current function calculateStats()
+    let stats = calculateStats(events);
+    document.getElementById('total-attendance').textContent =
+        stats.sum.toLocaleString();
 
     // calculate average attendance
-    let average = avgAttendance(events);
-    document.getElementById('avg-attendance').innerText =
-        Math.round(average).toLocaleString();
+    // let average = avgAttendance(events); // not being used because of current function calculateStats()
+    document.getElementById('avg-attendance').textContent =
+        Math.round(stats.average).toLocaleString();
 
     // calculate max attendance
-    let max = maxAttendance(events);
-    document.getElementById('max-attendance').innerText = max.toLocaleString();
+    // let max = maxAttendance(events); // not being used because of current function calculateStats()
+    document.getElementById('max-attendance').textContent = stats.max.toLocaleString();
 
     // calculate min attendance
-    let min = minAttendance(events);
-    document.getElementById('min-attendance').innerText = min.toLocaleString();
+    // let min = minAttendance(events); // not being used because of current function calculateStats()
+    document.getElementById('min-attendance').textContent = stats.min.toLocaleString();
 }
 
 function avgAttendance(events) {
@@ -207,6 +226,97 @@ function minAttendance(events) {
 function maxAttendance(events) {
     // calculate max attendance and return it
     let attendees = events.map(event => event.attendance);
-    let max = Math.max(...attendees);
+    let totalAttendees = new Set(attendees);
+    let max = Math.max(...totalAttendees);
+
     return max;
+}
+
+function calculateStats(events) {
+
+    let sum = 0;
+    let min = events[0].attendance; // minimum can't be zero, you wouldn't have zero attendees
+    let max = 0;
+
+    for (let i = 0; i < events.length; i++) {
+        let event = events[i];
+
+        sum += event.attendance
+
+        if (event.attendance < min) {
+            min = event.attendance;
+        }
+        
+        if (event.attendance > max) {
+            max = event.attendance;
+        }
+    }
+
+    let average = sum / events.length;
+
+    let stats = {
+        sum: sum,
+        average: average,
+        min: min,
+        max: max
+    }
+
+    return stats;
+}
+
+function filterByCity(dropDownElement) {
+    let cityName = dropDownElement.textContent;
+
+    document.getElementById('stats-loc').innerHTML = cityName;
+
+    // figure out what city we want
+
+    // get all the events
+    let allEvents = getEvents();
+
+    // filter those events to just one city
+    let filteredEvents = [];
+
+    for (let i = 0; i < allEvents.length; i++) {
+        let event = allEvents[i];
+
+        if (event.city == cityName || cityName == 'All') {
+            filteredEvents.push(event);
+        }
+    }
+
+    // filteredEvents = allEvents.filter(event => event.city == cityName || cityName == 'All'); // advanced array method expression to say the same thing from line 257
+    // let filteredEvents = cityName == 'All' ? allEvents : allEvents.filter(e => e.city == cityName) // advanced ternary expression to say the same thing from line 257
+
+    // call displayStats with the events for that city
+    displayStats(filteredEvents);
+    // call displayEvents with the events for that city
+    displayEvents(filteredEvents);
+}
+
+function saveNewEvent() {
+    let newEventForm = document.getElementById('newEventForm');
+    let formData = new FormData(newEventForm); // gets all the data from the form
+    let newEvent = Object.fromEntries(formData.entries()); // goes thru the form and creates an object where the name of the property is the name of the values
+
+    // fixes the format of the data
+    newEvent.attendance = parseInt(newEvent.attendance);
+    newEvent.date = new Date(newEvent.date).toLocaleDateString();
+
+    // get all current events
+    let allEvents = getEvents();
+    // add new event
+    allEvents.push(newEvent);
+    // save all events
+    saveEvents(allEvents);
+
+    newEventForm.reset(); // resets the form to empty
+
+    // hide the Bootstrap Modal on form submit.
+    let modalElement = document.getElementById('addEventModal');
+    let bsModal = bootstrap.Modal.getInstance(modalElement);
+    bsModal.hide();
+
+    // display all the events after form is submitted
+    buildDropDown();
 }
