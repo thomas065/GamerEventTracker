@@ -79,7 +79,7 @@
                                 class="nav-link"
                                 target="_blank"
                                 rel="noopener"
-                                href="https://github.com/thomas065/PAXTaskEvents"
+                                href="https://github.com/thomas065/GamerEventTracker"
                             >
                                 The Repo
                             </a>
@@ -437,11 +437,15 @@
                 </div>
                 <div class="col-12 col-lg-4">
                     <!-- Explain your code here -->
-                    <p>The code is structured in one function:</p>
                     <p>
-                        <code>displayMessage()</code> displays a SweetAlert when
-                        the button is presse.
+                        Okay, first I hard coded an array of information representing objects with properties such as <code>event, city, state</code>.
+                        They are examples to what may appear in large events like Comic-Con, PAX East or Heroes-Con conventions.
                     </p>
+                    <p>
+                        The first function, <code>buildDropDown()</code> serves as the entry point of the application which runs when the page is loaded.
+                        Inside, there are several actions that occur, it calls the <code>getEvents()</code> function to retrieve the current events.
+                    </p>
+                    <p>If there is no data stored on the local machine, it uses the data from the <code>events</code> array to provide the necessary code.  </p>
                 </div>
             </div>
         </main>
